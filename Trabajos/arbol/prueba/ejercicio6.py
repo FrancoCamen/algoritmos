@@ -55,13 +55,19 @@ def jedi_lightsabers():
     print("          Jedi who used green lightsabers")
     name_tree.jedi_lightsabersG("Trabajos/arbol/prueba/jedis.txt")
 
+#Jedi whose masters are in the archive
 def jedi_master():
     name_tree.jedi_with_Master("Trabajos/arbol/prueba/jedis.txt")
 
+#Jedi with togruta or cerean species
 def _jedi_specie():
     name_tree.jedi_especie("Trabajos/arbol/prueba/jedis.txt")
 
-_jedi_specie()
+#jedi beginning with A
+def jedi_with_A():
+    name_tree.jedi_A()
+
+
     
 
 

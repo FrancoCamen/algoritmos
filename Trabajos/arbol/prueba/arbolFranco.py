@@ -358,6 +358,54 @@ class BinaryTree:
                     print("---")
                 __jedi_especie(root.right, file)
         __jedi_especie(self.root, file)
+    
+    #jedi beginning with A
+    def jedi_A(self):
+        def __jedi_A(root):
+            if root is not None:
+                __jedi_A(root.left)
+                if root.value[0] == "a":
+                    print(root.value)
+                elif root.value == "-":
+                    print(root.value)
+                __jedi_A(root.right)
+        __jedi_A(self.root)
+
+    
+    # inorden list of creatures and who defeated them. Ejercice 23.a
+    def inorden_creatures(self, file):
+        def __inorden_creatures(root, file):
+            if root is not None:
+                __inorden_creatures(root.left, file)
+                pos = root.other_values
+                info = get_value_from_file(file, pos)
+                print("  Creature  ")
+                print(root.value)
+                print("  Defeated by  ")
+                print(info[1])
+                __inorden_creatures(root.right, file)
+        __inorden_creatures(self.root, file)
+
+    
+    #Add a description to the creatures. Ejercice 23.b
+    def add_description(self, file):
+        new_lines = []
+        new_lines.append("criatura;derrotado_por;description;\n")
+        def __add_description(root, file):
+            if root is not None:
+                __add_description(root.left, file)
+                pos = root.other_values
+                info = get_value_from_file(file, pos)
+                defeated_by = info[1]
+                description = f"{root.value} was defeated by {defeated_by}"
+                new_line = f"{root.value};{defeated_by};{description};\n"
+                new_lines.append(new_line)
+                __add_description(root.right, file)
+        __add_description(self.root, file)
+
+        return new_lines
+
+
 
 
 
