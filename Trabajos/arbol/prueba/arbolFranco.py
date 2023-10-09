@@ -12,6 +12,7 @@ class NodeTree():
     def __init__(self, value, other_values=None):
         self.value = value
         self.other_values = other_values
+        
         self.left = None
         self.right = None
         self.height = 0
@@ -413,7 +414,7 @@ class BinaryTree:
         print(f"Defeated by: {info[1]}")
         print(f"Description: {info[2]}")
     
-    #3 heroes who defeated the most number of creatures
+    #3 heroes who defeated the most number of creatures. Ejercicio 23.d
     def contar_heroes(self, file):
         heroes = []
         def __contar_heroes(root, file):
@@ -422,13 +423,58 @@ class BinaryTree:
                 pos = root.other_values
                 info = get_value_from_file(file, pos)
                 heroe = info[1]
-                heroes.append(heroe)
+                if heroe != "-":
+                    heroes.append(heroe)
                 __contar_heroes(root.right, file)
         __contar_heroes(self.root, file)
 
-        
+        top1 = [0, None]
+        top2 = [0, None]
+        top3 = [0, None]
         for heroe in heroes:
-            cant = heroes.
+            cant = heroes.count(heroe)
+            if heroe == heroes[0]:
+                top1 = [cant, heroe]
+            elif cant > top1[0]:
+                top3 = top2
+                top2 = top1
+                top1 = [cant, heroe]
+            elif cant > top2[0] and cant != top1[0]:
+                top3 = top2
+                top2 = [cant, heroe]
+            elif cant > top3[0] and cant != top2[0] and cant != top1[0]:
+                top3 = [cant, heroe]
+        print(f"Top 1: {top1[1]}.")
+        print(f"Top 2: {top2[1]}.")
+        print(f"TOp 3: {top3[1]}.")
+
+    #list creatures defeated by heracles. Ejercicio 23.e
+    def kills_Heracles(self, file):
+        print("Creatures defeated by Heracles")
+        def __kills_Heracles(root, file):
+            if root is not None:
+                __kills_Heracles(root.left, file)
+                pos = root.other_values
+                info = get_value_from_file(file, pos)
+                if info[1] == "Heracles":
+                    print(root.value)
+                __kills_Heracles(root.right, file)
+        __kills_Heracles(self.root, file)
+    
+    #list undefeated creatures. Ejercicio 23.f
+    def undefeated_creatures(self, file):
+        print("Creatures undefeated")
+        def __undefeated_creatures(root, file):
+            if root is not None:
+                __undefeated_creatures(root.left, file)
+                pos = root.other_values
+                info = get_value_from_file(file, pos)
+                if info[1] == "-":
+                    print(root.value)
+                __undefeated_creatures(root.right, file)
+        __undefeated_creatures(self.root, file)
+    
+
 
 
 

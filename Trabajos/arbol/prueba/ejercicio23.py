@@ -29,4 +29,16 @@ def _add_description():
 def search_talos():
     creatures_tree.search_talos("Trabajos/arbol/prueba/criaturas.txt")
 
-search_talos()
+#3 heroes who defeated the most number of creatures.
+def tops_heroes():
+    creatures_tree.contar_heroes("Trabajos/arbol/prueba/criaturas.txt")
+
+#list creatures defeated by heracles
+def kill_heracles():
+    creatures_tree.kills_Heracles("Trabajos/arbol/prueba/criaturas.txt")
+
+#list undefeated creatures
+def undefeated():
+    creatures_tree.undefeated_creatures("Trabajos/arbol/prueba/criaturas.txt")
+
+
