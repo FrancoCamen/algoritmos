@@ -25,3 +25,8 @@ def _add_description():
     file_creatures_copy.writelines(new_lines)
     file_creatures_copy.close()
 
+#Show talos information
+def search_talos():
+    creatures_tree.search_talos("Trabajos/arbol/prueba/criaturas.txt")
+
+search_talos()

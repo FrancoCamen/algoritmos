@@ -405,6 +405,30 @@ class BinaryTree:
 
         return new_lines
 
+    #Search Talos information. Ejercicio 23.c
+    def search_talos(self, file):
+        root = self.search("Talos")
+        info = get_value_from_file(file, root.other_values)
+        print(f"Creature: {root.value}")
+        print(f"Defeated by: {info[1]}")
+        print(f"Description: {info[2]}")
+    
+    #3 heroes who defeated the most number of creatures
+    def contar_heroes(self, file):
+        heroes = []
+        def __contar_heroes(root, file):
+            if root is not None:
+                __contar_heroes(root.left, file)
+                pos = root.other_values
+                info = get_value_from_file(file, pos)
+                heroe = info[1]
+                heroes.append(heroe)
+                __contar_heroes(root.right, file)
+        __contar_heroes(self.root, file)
+
+        
+        for heroe in heroes:
+            cant = heroes.
 
 
 
