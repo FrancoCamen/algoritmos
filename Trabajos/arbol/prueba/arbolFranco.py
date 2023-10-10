@@ -484,6 +484,47 @@ class BinaryTree:
                 __modifies_creatures(root.right, creatures)
         __modifies_creatures(self.root, creatures)
     
+    #search by coincidence. Ejercicio 23.i
+    def search_by_coincidence(self, value):
+        def __search_by_coincidence(root, value):
+            if root is not None:
+                if root.value.startswith(value):
+                    print(root.value)
+                __search_by_coincidence(root.left, value)
+                __search_by_coincidence(root.right, value)
+        __search_by_coincidence(self.root, value)
+    
+    #modify the Aves del Estinfalo node. Ejercicio 23.k
+    def modify_Aves(self):
+        def __modify_Aves(root):
+            if root is not None:
+                __modify_Aves(root.left)
+                if root.value == "Aves del Estínfalo":
+                    root.captured = "Heracles"
+                __modify_Aves(root.right)
+        __modify_Aves(self.root)
+    
+    #modify the name of the creature Ladon. Ejercicio 23.l
+    def modify_Ladon(self):
+        def __modify_Ladon(root):
+            if root is not None:
+                if root.value == "Ladón":
+                    root.value = "Dragón Ladón"
+        __modify_Ladon(self.root)
+    
+    #creatures captured by Heracles. Ejercicio 23.n
+    def defeated_by_Heracles(self):
+        print("Creatures captured by Heracles")
+        def __defeated_Heracles(root):
+            if root is not None:
+                __defeated_Heracles(root.left)
+                if root.captured == "Heracles":
+                    print(root.value)
+                __defeated_Heracles(root.right)
+        __defeated_Heracles(self.root)
+    
+
+    
 
 
 
