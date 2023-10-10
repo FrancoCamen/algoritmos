@@ -41,4 +41,15 @@ def kill_heracles():
 def undefeated():
     creatures_tree.undefeated_creatures("Trabajos/arbol/prueba/criaturas.txt")
 
+#load captured field
+creatures_tree.load_captured("Trabajos/arbol/prueba/criaturas.txt")
+
+#modifies who defeated the creatures
+def modifies_creatures():
+    creatures = ["Cerbero", "Toro de Creta", "Cierva Cerinea", "Jabalí de Erimanto"]
+    creatures_tree.modifies_creatures(creatures)
+
+modifies_creatures()
+
+    
 

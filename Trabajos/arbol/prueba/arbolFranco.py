@@ -9,10 +9,10 @@ def get_value_from_file(file_name, index):
 
 class NodeTree():
 
-    def __init__(self, value, other_values=None):
+    def __init__(self, value, other_values=None, captured=None):
         self.value = value
         self.other_values = other_values
-        
+        self.captured = captured
         self.left = None
         self.right = None
         self.height = 0
@@ -71,20 +71,20 @@ class BinaryTree:
                     root = self.double_rotation(root, False)
         return root
 
-    def insert_node(self, value, other_values=None):
+    def insert_node(self, value, other_values=None, captured=None):
 
-        def __insertar(root, value, other_values):
+        def __insertar(root, value, other_values, captured):
             if root is None:
-                return NodeTree(value, other_values)
+                return NodeTree(value, other_values, captured)
             elif value < root.value:
-                root.left = __insertar(root.left, value, other_values)
+                root.left = __insertar(root.left, value, other_values, captured)
             else:
-                root.right = __insertar(root.right, value, other_values)
+                root.right = __insertar(root.right, value, other_values, captured)
             root = self.balancing(root)
             self.update_height(root)
             return root
 
-        self.root = __insertar(self.root, value, other_values)
+        self.root = __insertar(self.root, value, other_values, captured)
 
     def by_level(self):
         if self.root is not None:
@@ -416,7 +416,7 @@ class BinaryTree:
     
     #3 heroes who defeated the most number of creatures. Ejercicio 23.d
     def contar_heroes(self, file):
-        heroes = []
+        heroes = {}
         def __contar_heroes(root, file):
             if root is not None:
                 __contar_heroes(root.left, file)
@@ -424,29 +424,16 @@ class BinaryTree:
                 info = get_value_from_file(file, pos)
                 heroe = info[1]
                 if heroe != "-":
-                    heroes.append(heroe)
+                    if heroe not in heroes:
+                        heroes[heroe] = 1
+                    else:
+                        heroes[heroe] +=1
                 __contar_heroes(root.right, file)
         __contar_heroes(self.root, file)
-
-        top1 = [0, None]
-        top2 = [0, None]
-        top3 = [0, None]
-        for heroe in heroes:
-            cant = heroes.count(heroe)
-            if heroe == heroes[0]:
-                top1 = [cant, heroe]
-            elif cant > top1[0]:
-                top3 = top2
-                top2 = top1
-                top1 = [cant, heroe]
-            elif cant > top2[0] and cant != top1[0]:
-                top3 = top2
-                top2 = [cant, heroe]
-            elif cant > top3[0] and cant != top2[0] and cant != top1[0]:
-                top3 = [cant, heroe]
-        print(f"Top 1: {top1[1]}.")
-        print(f"Top 2: {top2[1]}.")
-        print(f"TOp 3: {top3[1]}.")
+        heroes = dict(sorted(heroes.items(), key=lambda item:item[1], reverse=True))
+        for i in range(len(heroes)-3):
+            heroes.popitem()
+        print(heroes)
 
     #list creatures defeated by heracles. Ejercicio 23.e
     def kills_Heracles(self, file):
@@ -473,6 +460,29 @@ class BinaryTree:
                     print(root.value)
                 __undefeated_creatures(root.right, file)
         __undefeated_creatures(self.root, file)
+    
+    #load captured field. Ejercicio 23.g
+    def load_captured(self, file):
+        def __load_captured(root, file):
+            if root is not None:
+                __load_captured(root.left, file)
+                pos = root.other_values
+                info = get_value_from_file(file, pos)
+                if info[1] != "-":
+                    root.captured = info[1]
+                __load_captured(root.right, file)
+        __load_captured(self.root, file)
+
+    #modifies who defeated the creatures. Ejercicio 23.h
+    def modifies_creatures(self, creatures):
+        def __modifies_creatures(root, creatures):
+            if root is not None:
+                __modifies_creatures(root.left, creatures)
+                if root.value in creatures:
+                    root.captured = "Heracles"
+                print(f"Creature: {root.value}. Defeated by: {root.captured}")
+                __modifies_creatures(root.right, creatures)
+        __modifies_creatures(self.root, creatures)
     
 
 
